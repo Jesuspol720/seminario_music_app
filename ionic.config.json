@@ -1,0 +1,7 @@
+{
+  "name": "sonic_music_app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
