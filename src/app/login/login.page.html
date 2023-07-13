@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="ion-text-uppercase">
+    <ion-title>Login</ion-title>
+  </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm.value)">
+
+    <ion-item>
+      <ion-input label="Email" labelPlacement="floating" placeholder="name@example.com" formControlName="email"></ion-input>
+    </ion-item>
+    <div class="validation-erros">
+      <ng-container *ngFor="let validation of validation_messages.email">
+        <div *ngIf="(
+          loginForm.get('email')?.hasError(validation.type) && 
+          loginForm.get('email')?.dirty) 
+        ">
+          {{validation.message}}
+        </div>
+        
+      </ng-container>
+    </div>
+
+    <ion-item>
+      <ion-input label="Password" labelPlacement="floating" placeholder="*******" formControlName="password" type="Password"></ion-input>
+
+    </ion-item>
+    <div class="validation-erros">
+      <ng-container *ngFor="let validation of validation_messagesp.password">
+        <div *ngIf="(
+          loginForm.get('password')?.hasError(validation.type) && 
+          loginForm.get('password')?.dirty) 
+        ">
+          {{validation.message}}
+        </div>
+        
+      </ng-container>
+    </div>
+    <ion-button 
+      expand="full"
+      shape="round"
+      color="secondary"
+      [disabled]="!loginForm.valid"
+      type="submit"
+      >
+      Ingresar
+    </ion-button>
+
+  </form>
+</ion-content>

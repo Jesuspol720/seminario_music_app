@@ -1,6 +1,8 @@
 <ion-header >
   <ion-toolbar>
+    <div class="ion-text-center">
     <ion-title>YAMAHA</ion-title>
+  </div>
   </ion-toolbar>
 </ion-header>
 
@@ -12,10 +14,14 @@
   [speed]="400"
   >
    <swiper-slide *ngFor="let slide of slides">
+    <div class="ion-text-left">
     <h1 class="my-favorite-text-color">{{slide.title}}</h1>
+    </div>
     <img src={{slide.img}}>
     <ion-icon name="{{slide.icon}}" class="slide-icon"></ion-icon>
+    <div class="ion-text-justify">
     <p>{{slide.description}}</p>
+    </div>
    </swiper-slide>
 
   </swiper-container>
