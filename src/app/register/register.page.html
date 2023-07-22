@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button slot="start" routerLink="/login" defaultHref="#"></ion-back-button>
+    <ion-title>Registro</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" >
+  <form [formGroup]="registerForm" (ngSubmit)="registerUser(registerForm.value)">
+
+    <ion-row>
+      <ion-col>
+        <ion-label>Email</ion-label>
+        <ion-item class="ion-margin-top input-container" lines="none">
+          <ion-input placeholder="name@example.com" formControlName="email"></ion-input>
+        </ion-item>
+
+        <ng-template 
+          [ngTemplateOutlet]="validatorTemplate" 
+          [ngTemplateOutletContext]="{ $implicit: {form: registerForm, ctrl: 'email', msgs: validation_messages.email} }">
+        </ng-template>
+      
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top" >
+      <ion-col>
+        <ion-label>Password</ion-label>
+        <ion-item class="ion-margin-top input-container" lines="none">
+          <ion-input placeholder="min 6, max 10 caracteres" formControlName="password" [type]="showPassword ? 'text' : 'password'"></ion-input>
+          <ion-icon slot="end" (click)="changePasswordType()" [name]="showPassword ? 'eye-off-outline' : 'eye-outline' "></ion-icon>
+        </ion-item>
+        <ng-template 
+        [ngTemplateOutlet]="validatorTemplate" 
+        [ngTemplateOutletContext]="{ $implicit: {form: registerForm, ctrl: 'password', msgs: validation_messages.password} }">
+      </ng-template>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <ion-col>
+        <ion-label>Name</ion-label>
+        <ion-item class="ion-margin-top input-container" lines="none">
+          <ion-input placeholder="Nombre" formControlName="name"></ion-input>
+        </ion-item>
+        <ng-template 
+        [ngTemplateOutlet]="validatorTemplate" 
+        [ngTemplateOutletContext]="{ $implicit: {form: registerForm, ctrl: 'name', msgs: validation_messages.name} }">
+      </ng-template>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <ion-col>
+        <ion-label>Last Name</ion-label>
+        <ion-item class="ion-margin-top input-container" lines="none">
+          <ion-input placeholder="Apellido" formControlName="last_name"></ion-input>
+        </ion-item>
+        <ng-template 
+        [ngTemplateOutlet]="validatorTemplate" 
+        [ngTemplateOutletContext]="{ $implicit: {form: registerForm, ctrl: 'last_name', msgs: validation_messages.name} }">
+      </ng-template>
+      </ion-col>
+    </ion-row>
+
+    <ion-button class="ion-margin-top"
+      type="submit"
+      expand="full"
+      shape="round"
+      [disabled]="!registerForm.valid">
+      Registrarse
+    </ion-button>
+
+  </form>
+</ion-content>
+
+<ng-template let-obj #validatorTemplate >
+  <ul class="validation-errors">
+    <ng-container *ngFor="let validation of obj.msgs">
+      <li *ngIf="(
+        obj.form.get(obj.ctrl)?.hasError(validation.type) && 
+        obj.form.get(obj.ctrl)?.dirty) ">
+        {{validation.message}}
+    </li>
+    </ng-container>
+  </ul>
+</ng-template>

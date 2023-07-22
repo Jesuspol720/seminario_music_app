@@ -8,3 +8,49 @@
     right: 0;
     position: absolute;
   }
+
+
+  .logo {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo > img {
+    height: 30px;
+  }
+
+  .logo > label {
+    font-size: 20px;
+    // font-weight: bold;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  ion-label, .text {
+    font-weight: 600;
+  }
+
+  .header {
+    margin-top: 50px;
+    margin-bottom: 32px;
+  }
+
+  .or-text {
+    margin-top: 16px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .or-text > hr {
+    height: 0.3px;
+    background-color: rgba(128, 128, 128, 0.527);
+    width: 100%;
+  }
+
+  .validation-errors {
+    color: var(--ion-color-danger);
+    font-size: 14px;
+  }

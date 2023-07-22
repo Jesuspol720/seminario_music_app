@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AuthenticateService } from '../services/authenticate.service';
 import { NavController } from '@ionic/angular';
-import { Storage } from '@ionic/storage-angular';
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: 'app-register',
+  templateUrl: './register.page.html',
+  styleUrls: ['./register.page.scss'],
 })
-export class LoginPage implements OnInit {
-
-  loginForm: FormGroup;
+export class RegisterPage implements OnInit {
+  registerForm: FormGroup;
   showPassword: boolean = false;
 
   validation_messages = {
@@ -18,31 +16,32 @@ export class LoginPage implements OnInit {
       { type: "required", message: "El email es obligatorio" },
       { type: "pattern", message: "Debe poner un email valido" },
       { type: "maxlength", message: "Debe tener maximo 25 caracteres" },
-
     ],
     password: [
       { type: "required", message: "la contraseña es obligatoria" },
       { type: "minlength", message: "la contraseña debe tener minimo 6 caracteres" },
       { type: "maxlength", message: "la contraseña debe tener maximo 10 caracteres" },
-
+    ],
+    name: [
+      { type: "required", message: "El campo es obligatorio" },
+      { type: "minlength", message: "El campo debe tener minimo 3 caracteres" },
     ]
   };
 
-  errorMessage: string = '';
-
-  constructor(private formBuilder: FormBuilder, private authService: AuthenticateService,
-    private navCtrl: NavController,
-    private storage: Storage) {
-    this.loginForm = this.formBuilder.group(
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthenticateService,
+    private navCtrl: NavController
+  ) {
+    this.registerForm = this.formBuilder.group(
       {
         email: new FormControl(
           "",
           Validators.compose(
             [
               Validators.required,
-              Validators.maxLength(25),
               Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9_.+-]+.[a-zA-Z0-9.-]+$")
-            ]
+          ]
           )
         ),
         password: new FormControl(
@@ -50,37 +49,42 @@ export class LoginPage implements OnInit {
           Validators.compose(
             [
               Validators.required,
-              Validators.minLength(6),
-              Validators.maxLength(10)
+              Validators.minLength(6)
+            ]
+          )
+        ),
+        name: new FormControl(
+          "",
+          Validators.compose(
+            [
+              Validators.required,
+              Validators.minLength(3)
+            ]
+          )
+        ),
+        last_name: new FormControl(
+          "",
+          Validators.compose(
+            [
+              Validators.required,
+              Validators.minLength(3)
             ]
           )
         )
       }
-
     )
-  }
+   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
-  loginUser(credentials: any) {
-    console.log(credentials);
-    this.authService.loginUser(credentials).then(async (res) => {
-      this.errorMessage = "";
-      await this.storage.set("isUserLoggedIn", true);
-      this.navCtrl.navigateForward("/menu/home");
-    }).catch(err => {
-      this.errorMessage = err;
-      console.log(this.errorMessage);
+  registerUser(userData:any){
+    console.log(userData);
+    this.authService.registerUser(userData).then(() => {
+      this.navCtrl.navigateBack("/login");
     })
-  }
-
-  goToRegister() {
-    this.navCtrl.navigateForward("/register")
   }
 
   changePasswordType() {
     this.showPassword = !this.showPassword;
   }
-
 }
